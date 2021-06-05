@@ -18,7 +18,7 @@
 			<?php 
 			$i = 1;
 			include 'db_connect.php';
-			$qry = $conn->query("SELECT * FROM orders ");
+			$qry = $conn->query("SELECT * FROM `orders` ORDER BY date DESC");
 			while($row=$qry->fetch_assoc()):
 			 ?>
 			 <tr>

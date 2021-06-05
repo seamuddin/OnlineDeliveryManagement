@@ -6,7 +6,7 @@
 			<input type="text" name="first_name" required="" class="form-control">
 		</div>
 		<div class="form-group">
-			<label for="" class="control-label">Email</label>
+			<label for="" class="control-label">Lastname</label>
 			<input type="text" name="last_name" required="" class="form-control">
 		</div>
 		<div class="form-group">

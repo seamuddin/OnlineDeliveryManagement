@@ -1,10 +1,10 @@
-<div class="container-fluid">
+ <div class="container-fluid">
 	
 	<table class="table table-bordered">
 		<thead>
 			<tr>
 				<th>Qty</th>
-				<th>Order</th>
+				<th>Order</th>  
 				<th>Amount</th>
 			</tr>
 		</thead>
@@ -17,6 +17,7 @@
 				$total += $row['qty'] * $row['price'];
 			?>
 			<tr>
+
 				<td><?php echo $row['qty'] ?></td>
 				<td><?php echo $row['name'] ?></td>
 				<td><?php echo number_format($row['qty'] * $row['price'],2) ?></td>
@@ -32,7 +33,16 @@
 		</tfoot>
 	</table>
 	<div class="text-center">
+		<?php 
+
+			$qry1 = $conn->query("SELECT * FROM orders where Id =".$_GET['id']);
+			while($row1=$qry1->fetch_assoc()):
+				
+
+		 ?>
+		 <?php if($row1['status'] == 0){ ?>
 		<button class="btn btn-primary" id="confirm" type="button" onclick="confirm_order()">Confirm</button>
+	<?php }  endwhile?> 
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
 	</div>
@@ -52,6 +62,13 @@
 			success:function(resp){
 				if(resp == 1){
 					alert_toast("Order confirmed.")
+                        setTimeout(function(){
+                            location.reload()
+                        },1500)
+				}
+				else 
+				{
+					alert_toast("mail not send!!! may be its not valid.")
                         setTimeout(function(){
                             location.reload()
                         },1500)

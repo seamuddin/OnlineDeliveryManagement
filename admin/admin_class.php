@@ -189,6 +189,9 @@ Class Action {
 		$save = $this->db->query("INSERT INTO cart set ".$data);
 		if($save)
 			return 1;
+	else{
+		print("error");
+	}
 	}
 	function get_cart_count(){
 		extract($_POST);
@@ -240,9 +243,26 @@ Class Action {
 	}
 function confirm_order(){
 	extract($_POST);
-		$save = $this->db->query("UPDATE orders set status = 1 where id= ".$id);
-		if($save)
-			return 1;
+		$qry = $this->db->query("SELECT * FROM `orders` where id = ".$id);
+		while($row=$qry->fetch_assoc())
+		{
+			$to_email = $row['email'];
+			$name = $row['name'];
+			
+		}	
+			
+			$subject = "Confirmation by Online Food Ordering System";
+			$body = "Hi,".$name." Your order is confirmed. Please wait for delivery";
+			$headers = "From: restaurantonline19@gmail.com";
+		if (mail($to_email, $subject, $body, $headers)) {
+			$save = $this->db->query("UPDATE orders set status = 1 where id= ".$id);
+			    if($save)
+					return 1;
+			} else {
+			    return 0;
+			}
+		
+		
 }
 
 }

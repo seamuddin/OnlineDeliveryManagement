@@ -76,7 +76,7 @@ a.custom-menu-list span.icon{
     bottom: -.4em;
 }
 </style>
-
+<?php include('./db_connect.php'); ?>
 <div class="containe-fluid">
 
 	<div class="row">
@@ -85,16 +85,79 @@ a.custom-menu-list span.icon{
 		</div>
 	</div>
 
-	<div class="row mt-3 ml-3 mr-3">
+	<div class="row mt-3 ml-3 mr-3 justify-content-center">
 			<div class="col-lg-12">
-			<div class="card">
-				<div class="card-body">
-				<?php echo "Welcome back ".$_SESSION['login_name']."!"  ?>
-									
+				<div class="card">
+					<div class="card-body">
+					<?php echo "Welcome back ".$_SESSION['login_name']."!"  ?>
+										
+					</div>
 				</div>
-			</div>
 			
-		</div>
+			</div>
+			<div class="col-lg-4 p-3">
+				<div class="card">
+					<div class="card-body"  style="height: 150px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+						<h3 class="p-0">
+							<i class="fas fa-user"></i>
+						</h3>
+						<h3 class="p-0">
+							<?php 
+           	
+                       $qry0 = $conn->query("SELECT count(user_id) AS totaluser FROM  user_info ");
+                    while($row0 = $qry0->fetch_array()){ echo " Total user : ".$row0['totaluser']; }?>
+						</h3>
+					  
+										
+					</div>
+				</div>
+			
+			</div>
+
+			<div class="col-lg-4 p-3">
+				<div class="card">
+					<div class="card-body"  style="height: 150px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+						<h3 class="p-0">
+							<i class="fas fa-money-bill-alt"></i>
+						</h3>
+						<h3 class="p-0">
+							<?php 
+           	
+                       $qry1 = $conn->query("SELECT SUM(order_list.qty * product_list.price) as price FROM order_list INNER JOIN orders ON order_list.order_id = orders.id INNER JOIN product_list on order_list.product_id = product_list.id WHERE orders.status = 1");
+                    while($row1 = $qry1->fetch_array()){ echo " Total Sale : ".$row1['price']."TK"; }?>
+						</h3>
+					  
+										
+					</div>
+				</div>
+			
+			</div>
+
+
+			<div class="col-lg-4 p-3">
+				<div class="card">
+					<div class="card-body"  style="height: 150px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+						<h3 class="p-0">
+							<i class="fas fa-money-bill-alt"></i>
+						</h3>
+						<h4 class="p-0">
+							<?php 
+							
+							date_default_timezone_set('Asia/Dhaka');
+           				$time = date("Y-m-d");
+           			
+                       $qry1 = $conn->query("SELECT SUM(order_list.qty * product_list.price) as price FROM order_list INNER JOIN orders ON order_list.order_id = orders.id INNER JOIN product_list on order_list.product_id = product_list.id WHERE orders.status = 1 and orders.date = '$time'");
+                    while($row1 = $qry1->fetch_array()){ echo " Today Total Sale : ".$row1['price']."TK"; }?>
+						</h4>
+					  
+										
+					</div>
+				</div>
+			
+			</div>
+
+
+
 		</div>
 	</div>
 
